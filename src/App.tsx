@@ -1,12 +1,15 @@
+import Nav from "./components/Nav"
 
 
 function App() {
 
   return (
     <>
-      
-    <div>this is a react app</div> 
-      
+
+      <div className="w-full h-screen">
+        <Nav />
+      </div>
+
     </>
   )
 }
