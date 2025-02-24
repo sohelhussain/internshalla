@@ -1,4 +1,5 @@
 import Nav from "./components/Nav"
+import Home from "./page/Home"
 
 
 function App() {
@@ -8,13 +9,13 @@ function App() {
 
 
       <div className="w-full h-screen">
-        
+
         <Nav />
-        
+        <Home />
       </div>
 
 
-      
+
     </>
   )
 }
