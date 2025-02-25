@@ -1,8 +1,13 @@
-name: greet
-on: push
+name: deployInternshalla
+on:
+    - push
+    - workflow_dispatch
 jobs:
-    hello:
+    deploycode:
         runs-on: ubuntu-latest
         steps:
-            - name: "Hello world"
-              run: echo "hi there"
+            - name: clone code
+              run: |
+                echo "cloning the our repo in the ubuntu machine"
+                echo ${{toJson(github)}}
+                git clone https://github.com${{github.repository}}.git
