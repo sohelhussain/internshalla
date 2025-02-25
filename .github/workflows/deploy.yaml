@@ -9,5 +9,5 @@ jobs:
             - name: clone code
               run: |
                 echo "cloning the our repo in the ubuntu machine"
-                echo ${{toJson(github)}}
+                echo "${{toJson(github)}}"
                 git clone https://github.com${{github.repository}}.git
