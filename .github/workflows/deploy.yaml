@@ -8,3 +8,15 @@ jobs:
     steps:
       - name: clone code
         uses: actions/checkout@v4
+      - name: Install node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: print node
+        run: | 
+          echo "node is install successfully"
+          node -v
+      - name: Dependencies install
+        run: |
+          npm ci
+          echo "dependencies install successfully"
