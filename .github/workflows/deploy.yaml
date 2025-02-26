@@ -4,8 +4,12 @@ on:
     branches:
       - main
       - 'feat/**'
+    paths-ignore:
+      - '.github/workflows/*'
+      - 'README.md'
+  workflow_dispatch:
 jobs:
-  deploycode:
+  buildCode:
     runs-on: ubuntu-latest
     steps:
       - name: clone code
@@ -31,26 +35,19 @@ jobs:
         run: |
           npm run build
           echo "build successful"
-  afterdeploy:
-    needs: deploycode
+      - name: Upload a artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist-file
+          path: dist
+  deployCode:
+    needs: buildCode
     runs-on: ubuntu-latest
     steps:
-      - name: clone code
-        uses: actions/checkout@v4
-      - name: Install node
-        uses: actions/setup-node@v4
+      - name: download artifact
+        uses: actions/download-artifact@v4
         with:
-          node-version: 22
-      - name: print node
-        run: |
-          node -v
-          echo "node install"
-      - name: create a cache dependencies
-        uses: actions/cache@v4
-        with:
-          path: ~/.npm
-          key: ${{runner.os}}-build-${{hashFiles('**/package-lock.json')}}
-      - name: dependencies install
-        run: | 
-          npm ci
-          echo "hello world"
+          name: dist-file
+          path: dist
+      - name: deploy successful
+        run: echo "deploy successful"
