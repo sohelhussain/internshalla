@@ -1,7 +1,12 @@
 name: deployInternshalla
 on:
-  - push
-  - workflow_dispatch
+  push:
+    branches:
+      - main
+      - 'feat/**'
+    paths-ignore:
+      - '.github/workflows/*'
+      - 'README.md'
 jobs:
   deploycode:
     runs-on: ubuntu-latest
@@ -16,6 +21,11 @@ jobs:
         run: | 
           echo "node is install successfully"
           node -v
+      - name: create a cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{runner.os}}-build-${{hashFiles('**/package-lock.json')}}
       - name: Dependencies install
         run: |
           npm ci
@@ -38,6 +48,11 @@ jobs:
         run: |
           node -v
           echo "node install"
+      - name: create a cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{runner.os}}-build-${{hashFiles('**/package-lock.json')}}
       - name: dependencies install
         run: | 
           npm ci
