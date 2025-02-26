@@ -24,3 +24,20 @@ jobs:
         run: |
           npm run build
           echo "build successful"
+  afterdeploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: clone code
+        uses: actions/checkout@v4
+      - name: Install node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: print node
+        run: |
+          node -v
+          echo "node install"
+      - name: dependencies install
+        run: | 
+          npm ci
+          echo "hello world"
