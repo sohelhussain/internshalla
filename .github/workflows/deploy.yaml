@@ -1,13 +1,10 @@
 name: deployInternshalla
 on:
-    - push
-    - workflow_dispatch
+  - push
+  - workflow_dispatch
 jobs:
-    deploycode:
-        runs-on: ubuntu-latest
-        steps:
-            - name: clone code
-              run: |
-                echo "cloning the our repo in the ubuntu machine"
-                echo "${{toJson(github)}}"
-                git clone https://github.com/${{github.repository}}.git
+  deploycode:
+    runs-on: ubuntu-latest
+    steps:
+      - name: clone code
+        uses: actions/checkout@v4
