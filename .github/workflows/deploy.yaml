@@ -25,6 +25,7 @@ jobs:
           npm run build
           echo "build successful"
   afterdeploy:
+    needs: deploycode
     runs-on: ubuntu-latest
     steps:
       - name: clone code
