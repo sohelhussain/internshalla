@@ -3,13 +3,13 @@ on:
   push:
     branches:
       - main
-      - 'feat/**'
+      - "feat/**"
     paths-ignore:
-      - '.github/workflows/*'
-      - 'README.md'
+      - ".github/workflows/*"
+      - "README.md"
   workflow_dispatch:
 jobs:
-  buildCode:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: clone code
@@ -19,7 +19,7 @@ jobs:
         with:
           node-version: 22
       - name: print node
-        run: | 
+        run: |
           echo "node is install successfully"
           node -v
       - name: create a cache dependencies
@@ -36,18 +36,22 @@ jobs:
           npm run build
           echo "build successful"
       - name: Upload a artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-pages-artifact@v3
         with:
-          name: dist-file
+          name: matrix
           path: dist
-  deployCode:
-    needs: buildCode
+  deploy:
+    needs: build
     runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages 
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: download artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: dist-file
-          path: dist
-      - name: deploy successful
-        run: echo "deploy successful"
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+        # with:
+          # token: ${{secrets.GITHUB_TOKEN}}
